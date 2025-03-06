@@ -71,13 +71,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
-
-# Additional job to use StepSecurity online service
-  stepsecurity:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Analyze security with StepSecurity"
-        run: |
-          curl -sL https://app.stepsecurity.io/install.sh | bash -s -- analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
