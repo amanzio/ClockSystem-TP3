@@ -53,6 +53,13 @@ jobs:
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
         # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
+    env:
+      DISPLAY: ":99.0" # Set a display for Xvfb
+    services:
+      xvfb:
+        image: selenium/standalone-chrome:latest
+        options: -e VNC_SERVER=true -e VNC_PORT=5900
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -61,6 +68,8 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+    - name: Start Xvfb
+      run: Xvfb $DISPLAY -ac -screen 0 1600x1200x24 > /dev/null 2>&1 &
 
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
@@ -88,9 +97,7 @@ jobs:
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
     - if: matrix.build-mode == 'manual'
-      run: |
-        # Add your build steps here
-        ./gradle build
+      run: gradle build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
