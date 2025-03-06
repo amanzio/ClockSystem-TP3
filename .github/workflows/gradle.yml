@@ -20,6 +20,9 @@ jobs:
     permissions:
       contents: read
 
+    env:
+      DISPLAY: ":99.0" # Set a display for Xvfb
+      
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 21
