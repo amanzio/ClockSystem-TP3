@@ -90,7 +90,7 @@ jobs:
     - if: matrix.build-mode == 'manual'
       run: |
         # Add your build steps here
-        ./gradlew build
+        ./gradle build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
