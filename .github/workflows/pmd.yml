@@ -37,8 +37,11 @@ jobs:
           rulesets: 'rulesets/java/quickstart.xml'  # Provide the full path to the ruleset
           sourcePath: 'src/main/java'  # Update this path if your source files are located elsewhere
           analyzeModifiedFilesOnly: false
-          failOnViolation: true  # Fail the workflow if there are violations
+          #failOnViolation: true  # Fail the workflow if there are violations
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: pmd-report.sarif
+      - name: Fail build if there are violations
+        if: steps.pmd.outputs.violations != 0
+        run: exit 1
