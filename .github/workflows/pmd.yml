@@ -37,6 +37,7 @@ jobs:
           rulesets: 'rulesets/java/quickstart.xml'  # Provide the full path to the ruleset
           sourcePath: 'src/main/java'  # Update this path if your source files are located elsewhere
           analyzeModifiedFilesOnly: false
+          failOnViolation: true  # Fail the workflow if there are violations
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
         with:
