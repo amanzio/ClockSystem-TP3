@@ -34,8 +34,8 @@ jobs:
         id: pmd
         uses: pmd/pmd-github-action@v2
         with:
-          rulesets: 'java-basic'
-          sourcePath: 'src/main/java'
+          rulesets: 'rulesets/java/quickstart.xml'  # Provide the full path to the ruleset
+          sourcePath: 'src/main/java'  # Update this path if your source files are located elsewhere
           analyzeModifiedFilesOnly: false
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v3
